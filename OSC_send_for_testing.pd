@@ -1,0 +1,35 @@
+#N canvas 1702 34 699 300 10;
+#X declare -lib mrpeach;
+#X obj 11 10 import mrpeach;
+#X msg 49 99 disconnect;
+#X obj 16 193 udpsend;
+#X msg 42 70 connect 192.168.1.66 9000;
+#X obj 98 165 packOSC;
+#X msg 154 229 send /control/createBlankInterface myInterface portrait"
+;
+#X msg 278 43 send /yamaha 1;
+#X obj 301 7 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X msg 390 42 send /yamaha 2;
+#X obj 404 9 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 499 54 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 483 115 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 476 90 send /yamaha 3;
+#X msg 472 140 send /yamaha 4;
+#X msg 25 43 connect 127.0.0.1 901;
+#X connect 1 0 2 0;
+#X connect 3 0 2 0;
+#X connect 4 0 2 0;
+#X connect 5 0 4 0;
+#X connect 6 0 4 0;
+#X connect 7 0 6 0;
+#X connect 8 0 4 0;
+#X connect 9 0 8 0;
+#X connect 10 0 12 0;
+#X connect 11 0 13 0;
+#X connect 12 0 4 0;
+#X connect 13 0 4 0;
+#X connect 14 0 2 0;
