@@ -1,4 +1,4 @@
-#N canvas 744 76 408 142 10;
+#N canvas 872 203 408 142 10;
 #X declare -lib mrpeach;
 #X obj -88 362 import mrpeach;
 #X msg -89 463 disconnect;
@@ -14,7 +14,6 @@
 -1;
 #X obj -22 46 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X msg -90 395 connect 127.0.0.1 901;
 #X msg -87 199 send /yamaha 2;
 #X obj -91 16 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
@@ -44,26 +43,27 @@
 #X obj -62 70 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X text -87 51 Night Mode;
+#X msg -90 395 connect 127.0.0.1 9000;
 #X connect 1 0 2 0;
 #X connect 3 0 2 0;
 #X connect 4 0 2 0;
 #X connect 5 0 4 0;
 #X connect 6 0 5 0;
-#X connect 7 0 17 0;
-#X connect 8 0 11 0;
-#X connect 9 0 15 0;
-#X connect 10 0 2 0;
-#X connect 11 0 4 0;
-#X connect 12 0 10 0;
+#X connect 7 0 16 0;
+#X connect 8 0 10 0;
+#X connect 9 0 14 0;
+#X connect 10 0 4 0;
+#X connect 11 0 33 0;
+#X connect 14 0 4 0;
 #X connect 15 0 4 0;
 #X connect 16 0 4 0;
 #X connect 17 0 4 0;
 #X connect 18 0 4 0;
 #X connect 19 0 4 0;
 #X connect 20 0 4 0;
-#X connect 21 0 4 0;
+#X connect 22 0 17 0;
 #X connect 23 0 18 0;
 #X connect 24 0 19 0;
-#X connect 25 0 20 0;
-#X connect 30 0 16 0;
-#X connect 32 0 21 0;
+#X connect 29 0 15 0;
+#X connect 31 0 20 0;
+#X connect 33 0 2 0;

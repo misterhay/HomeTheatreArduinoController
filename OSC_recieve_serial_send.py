@@ -3,7 +3,7 @@ import OSC #requires pyOSC
 import time, threading
 
 
-receiveAddress = ('127.0.0.1', 901)
+receiveAddress = ('127.0.0.1', 9000)
 server = OSC.OSCServer(receiveAddress) #set up the OSC server
 server.addDefaultHandlers() #not really necessary
 
