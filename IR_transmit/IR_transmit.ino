@@ -43,20 +43,20 @@ void setup() {
 void loop() {
   // read from the serial port to see if the computer is talking
   while(Serial.available()) {serialMessage = Serial.read();}
-  if (serialMessage == '1'){irsend.sendNEC(0x5EA1F807, 32);} // power toggle
-  if (serialMessage == '2'){irsend.sendNEC(0x5EA138C7, 32);} // Mute
-  if (serialMessage == '3'){irsend.sendNEC(0x5EA158A7, 32);} // VolumeUp
-  if (serialMessage == '4'){irsend.sendNEC(0x5EA1D827, 32);} // VolumeDown
-  if (serialMessage == '5'){irsend.sendNEC(0x5EA18877, 32);} // PresetPrevious
-  if (serialMessage == '6'){irsend.sendNEC(0x5EA1A857, 32);} // InputCD
-  if (serialMessage == '7'){irsend.sendNEC(0x5EA1837C, 32);} // InputDVD
-  if (serialMessage == '8'){irsend.sendNEC(0x5EA1936C, 32);} // InputMD/CDR
-  if (serialMessage == '9'){irsend.sendNEC(0x5EA16897, 32);} // InputTuner
-  if (serialMessage == '10'){irsend.sendNEC(0x5EA12AD5, 32);} // InputDTV/CBL
-  if (serialMessage == '11'){irsend.sendNEC(0x5EA1AA55, 32);} // InputV-Aux
-  if (serialMessage == '12'){irsend.sendNEC(0x5EA1F00F, 32);} // InputVCR
-  if (serialMessage == '13'){irsend.sendNEC(0x5EA1A956, 32);} // Night Mode
-  if (serialMessage == '14'){irsend.sendNEC(0x5EA1EA15, 32);} // Sleep
+  if (serialMessage == 1){
+   irsend.sendNEC(0x5EA1F807, 32); // Power toggle
+   delay(1000); // wait for a second
+   irsend.sendNEC(0x5EA1EA15, 32); // start sleeping for 120 minutes
+  }
+  if (serialMessage == 2){irsend.sendNEC(0x5EA158A7, 32);} // VolumeUp
+  if (serialMessage == 3){irsend.sendNEC(0x5EA1D827, 32);} // VolumeDown
+  if (serialMessage == 4){irsend.sendNEC(0x5EA18877, 32);} // PresetPrevious
+  if (serialMessage == 5){irsend.sendNEC(0x5EA1837C, 32);} // Xbox
+  if (serialMessage == 6){irsend.sendNEC(0x5EA16897, 32);} // Radio
+  if (serialMessage == 7){irsend.sendNEC(0x5EA12AD5, 32);} // Apple TV
+  if (serialMessage == 8){irsend.sendNEC(0x5EA1AA55, 32);} // Computer
+  if (serialMessage == 9){irsend.sendNEC(0x5EA1A956, 32);} // Night Mode
+  //if (serialMessage == 9){irsend.sendNEC(0x5EA1EA15, 32);} // Sleep
   
   // for testing serial messages
   if (serialMessage == 100){digitalWrite(GREEN_LED, HIGH);}
