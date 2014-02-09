@@ -18,6 +18,17 @@
  "width" : .25, "height" : .25,
  "mode" : "momentary",
  "label" : "Power",
- "min":-1, "max":1,
- "address" : "yamaha",
-}
+ "min":0, "max":1,
+ "address" : "/yamaha",
+},
+
+{
+ "name" : "yamahaVolumeUp",
+ "type" : "Button",
+ "x" : 0, "y" : .30,
+ "width" : .25, "height" : .25,
+ "mode" : "momentary",
+ "label" : "VolumeUp",
+ "min":0, "max":2,
+ "address" : "/yamaha",
+},
