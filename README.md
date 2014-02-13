@@ -1,10 +1,12 @@
 HomeTheatreArduinoController
 ============================
-This will be an Arduino-based controller for my home theatre receiver.
+This is an Arduino-based controller for my home theatre receiver with OSC for networked remote controllers.
 
-Maybe with OSC for network-based remote controllers.
+The Arduino (Launchpad, Teensy, et al.) has an IR LED for transmitting codes based on the serial messages it receives from the computer that is running the Python program that receives OSC messages. The OSC messages can be transmitted by the Processing sketch or TouchOSC (on iOS or Android)
 
-The IR Codes are (NEC format):
+
+
+The IR Codes for my Yamaha receiver are (in NEC format):
 
 Power		5EA1F807
 
