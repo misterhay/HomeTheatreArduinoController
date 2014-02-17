@@ -24,16 +24,19 @@ int serialMessage; // for data we'll receive from the serial port
 // buttons can be connected to 3 through 10, 12 to 15, 18, and 19
 // for a total of 14 (or 13 if we don't use pin 14 which is GREEN_LED)
 // but if we use serial communication, we also can't use pins 3 and 4
-const int button1 = 8; //button on this pin and ground
-const int button2 = 9; //button on this pin and ground
+byte buttons[] = {5, 6, 7, 8, 9, 10, 12, 13, 15}; //buttons on these pins and ground
+#define NUMBUTTONS sizeof(buttons)
 
 // debounce values are 20 milliseconds for each button
 //Bounce bouncer1 = Bounce(button1, 20);
 //Bounce bouncer2 = Bounce(button2, 20);
 
 void setup() {
-  pinMode(button1,INPUT_PULLUP);
-  pinMode(button2,INPUT_PULLUP);
+  byte i; // we'll use this for iterating through the buttons
+  for (i=0; i< NUMBUTTONS; i++) {
+    pinMode(buttons[i], INPUT_PULLUP); //set that pin as an input with a pullup resistor
+    Bounce bouncer??????? = Bounce(buttons[i], 20);
+  }
   pinMode(GREEN_LED,OUTPUT); // pin 14
   pinMode(RED_LED,OUTPUT); // pin 2
   // set up serial listen, so that we can receive "OSC" commands relayed from the computer
