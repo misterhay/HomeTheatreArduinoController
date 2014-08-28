@@ -1,106 +1,127 @@
 // This code runs on a TI LaunchPad with MSP430G2553, but can be modified to run on an Arduino
 // It is in the public domain
 
-// check out multiple buttons with this code:
-// http://www.adafruit.com/blog/2009/10/20/example-code-for-multi-button-checker-with-debouncing/
-
-// check out serial event with this code:
-// http://arduino.cc/en/Tutorial/SerialEvent
-
-
 #include <IRremote.h>
 /* you need to comment out two lines in energia\hardware\msp430\libraries\IRremote\IRremote.cpp:
 //  pinMode(TIMER_PWM_PIN, OUTPUT);
 //  digitalWrite(TIMER_PWM_PIN, LOW); // When not sending PWM, we want it low
 */
 
-
 // from https://github.com/thomasfredericks/Bounce-Arduino-Wiring
-#include <Bounce2.h>
+#include <Bounce.h> // not Bounce2.h
 
 IRsend irsend; // the IR transmit pin is 11, also requires a 50-150 ohm resistor
 const int irLED = 11;
 int serialMessage; // for data we'll receive from the serial port
+
+int debounceTime = 20;
+
 // buttons can be connected to 3 through 10, 12 to 15, 18, and 19
 // for a total of 14 (or 13 if we don't use pin 14 which is GREEN_LED)
 // but if we use serial communication, we also can't use pins 3 and 4
-byte buttons[] = {5, 6, 7, 8, 9, 10, 12, 13, 15}; //buttons on these pins and ground
-#define NUMBUTTONS sizeof(buttons)
+int buttonPower = 5;
+int buttonVolumeUp = 6;
+int buttonVolumeDown = 7;
+int buttonPresetPrevious = 8;
+int buttonXbox = 9;
+int buttonRadio = 10;
+int buttonAppleTV = 12;
+int buttonComputer = 13;
+int buttonNightMode = 15;//*/
 
-// debounce values are 20 milliseconds for each button
-//Bounce bouncer1 = Bounce(button1, 20);
-//Bounce bouncer2 = Bounce(button2, 20);
+Bounce debouncePower = Bounce(buttonPower, debounceTime);
+Bounce debounceVolumeUp = Bounce(buttonVolumeUp, debounceTime);
+Bounce debounceVolumeDown = Bounce(buttonVolumeDown, debounceTime);
+Bounce debouncePresetPrevious = Bounce(buttonPresetPrevious, debounceTime);
+Bounce debounceXbox = Bounce(buttonXbox, debounceTime);
+Bounce debounceRadio = Bounce(buttonRadio, debounceTime);
+Bounce debounceAppleTV = Bounce(buttonAppleTV, debounceTime);
+Bounce debounceComputer = Bounce(buttonComputer, debounceTime);
+Bounce debounceNightMode = Bounce(buttonNightMode, debounceTime);//*/
 
 void setup() {
-  byte i; // we'll use this for iterating through the buttons
-  for (i=0; i< NUMBUTTONS; i++) {
-    pinMode(buttons[i], INPUT_PULLUP); //set that pin as an input with a pullup resistor
-    Bounce bouncer??????? = Bounce(buttons[i], 20);
-  }
   pinMode(GREEN_LED,OUTPUT); // pin 14
   pinMode(RED_LED,OUTPUT); // pin 2
-  // set up serial listen, so that we can receive "OSC" commands relayed from the computer
-  Serial.begin(9600);
+  Serial.begin(9600); // set up serial listen, so that we can receive commands relayed from the OSC server computer
+  pinMode(buttonPower, INPUT_PULLUP);
+  pinMode(buttonVolumeUp, INPUT_PULLUP);
+  pinMode(buttonVolumeDown, INPUT_PULLUP);
+  pinMode(buttonPresetPrevious, INPUT_PULLUP);
+  pinMode(buttonXbox, INPUT_PULLUP);
+  pinMode(buttonRadio, INPUT_PULLUP);
+  pinMode(buttonAppleTV, INPUT_PULLUP);
+  pinMode(buttonComputer, INPUT_PULLUP);
+  pinMode(buttonNightMode, INPUT_PULLUP);
+  digitalWrite(RED_LED, HIGH);
+  delay(500); // wait half a second
+  digitalWrite(RED_LED, LOW);
+  digitalWrite(GREEN_LED, HIGH);
+  delay(500);
+  digitalWrite(GREEN_LED, LOW);
+}
+
+void irMessage(int messageNumber) {
+  if (messageNumber == 1){irsend.sendNEC(0x5EA1F807, 32); delay(1000); irsend.sendNEC(0x5EA1EA15, 32);}// Power toggle, wait, start sleeping for 120 minutes
+  if (messageNumber == 2){irsend.sendNEC(0x5EA158A7, 32);} // VolumeUp
+  if (messageNumber == 3){irsend.sendNEC(0x5EA1D827, 32);} // VolumeDown
+  if (messageNumber == 4){irsend.sendNEC(0x5EA18877, 32);} // PresetPrevious
+  if (messageNumber == 5){irsend.sendNEC(0x5EA1837C, 32);} // Xbox
+  if (messageNumber == 6){irsend.sendNEC(0x5EA16897, 32);} // Radio
+  if (messageNumber == 7){irsend.sendNEC(0x5EA12AD5, 32);} // AppleTV
+  if (messageNumber == 8){irsend.sendNEC(0x5EA1AA55, 32);} // Computer
+  if (messageNumber == 9){irsend.sendNEC(0x5EA1A956, 32);} // NightMode
 }
 
 void loop() {
-  // read from the serial port to see if the computer is talking
+  // update the debouncers
+  debouncePower.update();
+  debounceVolumeUp.update();
+  debounceVolumeDown.update();
+  debouncePresetPrevious.update();
+  debounceXbox.update();
+  debounceRadio.update();
+  debounceAppleTV.update();
+  debounceComputer.update();
+  debounceNightMode.update();//*/
+
+  // read from the serial port
   while(Serial.available()) {serialMessage = Serial.read();}
-  if (serialMessage == '1'){
-   irsend.sendNEC(0x5EA1F807, 32); // Power toggle
-   delay(1000); // wait for a second
-   irsend.sendNEC(0x5EA1EA15, 32); // start sleeping for 120 minutes
-  }
-  if (serialMessage == '2'){irsend.sendNEC(0x5EA158A7, 32);} // VolumeUp
-  if (serialMessage == '3'){irsend.sendNEC(0x5EA1D827, 32);} // VolumeDown
-  if (serialMessage == '4'){irsend.sendNEC(0x5EA18877, 32);} // PresetPrevious
-  if (serialMessage == '5'){irsend.sendNEC(0x5EA1837C, 32);} // Xbox
-  if (serialMessage == '6'){irsend.sendNEC(0x5EA16897, 32);} // Radio
-  if (serialMessage == '7'){irsend.sendNEC(0x5EA12AD5, 32);} // Apple TV
-  if (serialMessage == '8'){irsend.sendNEC(0x5EA1AA55, 32);} // Computer
-  if (serialMessage == '9'){irsend.sendNEC(0x5EA1A956, 32);} // Night Mode
-  //if (serialMessage == 9){irsend.sendNEC(0x5EA1EA15, 32);} // Sleep
-  
+  if(serialMessage == '1'){irMessage(1);}
+  //if(serialMessage == '1'){irsend.sendNEC(0x5EA1F807, 32);}
+  if(serialMessage == '2'){irMessage(2);}
+  if(serialMessage == '3'){irMessage(3);}
+  if(serialMessage == '4'){irMessage(4);}
+  if(serialMessage == '5'){irMessage(5);}
+  if(serialMessage == '6'){irMessage(6);}
+  if(serialMessage == '7'){irMessage(7);}
+  if(serialMessage == '8'){irMessage(8);}
+  if(serialMessage == '9'){irMessage(9);}
+
   // for testing serial messages
   if (serialMessage == 100){digitalWrite(GREEN_LED, HIGH);}
   if (serialMessage == 200){digitalWrite(RED_LED, HIGH);}
   
+  // read the debouncers
+  if(debouncePower.read() == 0) {irMessage(1);}
+  if(debounceVolumeUp.read() == 0) {irMessage(2);}
+  if(debounceVolumeDown.read() == 0) {irMessage(3);}
+  if(debouncePresetPrevious.read() == 0) {irMessage(4);}
+  if(debounceXbox.read() == 0) {irMessage(5);}
+  if(debounceRadio.read() == 0) {irMessage(6);}
+  if(debounceAppleTV.read() == 0) {irMessage(7);}
+  if(debounceComputer.read() == 0) {irMessage(8);}
+  if(debounceNightMode.read() == 0) {irMessage(9);}//*/
+
   // otherwise turn off all of the LEDs
   else {
     digitalWrite(GREEN_LED, LOW);
     digitalWrite(RED_LED, LOW);
     digitalWrite(irLED, LOW);
   }
-  
-/* here's a bunch of code for physical buttons that we'll deal with later  
-  // Update the debouncers
-  bouncer1.update ( );
-  bouncer2.update ( );
-
-  if (bouncer1.read() == 0) {
-    digitalWrite(RED_LED, HIGH); // turn on the red status LED so we know something is happening
-    irsend.sendNEC(0x5EA1F807, 32); // send power toggle
-    delay(100);
-    irsend.sendNEC(0x5EA1EA15, 32); // send sleep (120 minutes is the default, send again to decrement)
-    digitalWrite(irLED, LOW); // turn off the IR LED when not transmitting
-    delay(1000); // wait for a second
-  }
-  else if (bouncer2.read() == 0) {
-    digitalWrite(RED_LED, HIGH); // turn on the red status LED so we know something is happening
-    irsend.sendNEC(0x5EA1837C, 32); // send input DVD
-    delay(100);
-    irsend.sendNEC(0x5EA1A857, 32); // send input CD
-    delay(100);
-    digitalWrite(irLED, LOW); // turn off the IR LED when not transmitting
-    delay(1000); // wait for a second
-  }
-  else {
-  }
-  */
 }
 
 /*
-The IR Codes are (NEC format):
+The IR Codes are (NEC format, 32 bit):
 Power Toggle	5EA1F807
 Mute		5EA138C7
 VolumeUp	5EA158A7
