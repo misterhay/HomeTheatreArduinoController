@@ -4,7 +4,7 @@ PFont font; // so that we can display printing
 
 OscP5 oscP5;
 NetAddress serverAddress;
-String theServerAddress = "192.168.1.64";
+String theServerAddress = "localhost";
 int theServerPort = 9000;
 int theReceivingPort = theServerPort + 1;
 int size = 150; //the size of the buttons (power and volume will be double this)

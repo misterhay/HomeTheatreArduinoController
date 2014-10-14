@@ -60,6 +60,7 @@ void setup() {
   digitalWrite(GREEN_LED, LOW);
 }
 
+/*
 void irMessage(int messageNumber) {
   if (messageNumber == 1){irsend.sendNEC(0x5EA1F807, 32); delay(1000); irsend.sendNEC(0x5EA1EA15, 32);}// Power toggle, wait, start sleeping for 120 minutes
   if (messageNumber == 2){irsend.sendNEC(0x5EA158A7, 32);} // VolumeUp
@@ -70,6 +71,19 @@ void irMessage(int messageNumber) {
   if (messageNumber == 7){irsend.sendNEC(0x5EA12AD5, 32);} // AppleTV
   if (messageNumber == 8){irsend.sendNEC(0x5EA1AA55, 32);} // Computer
   if (messageNumber == 9){irsend.sendNEC(0x5EA1A956, 32);} // NightMode
+}
+//*/
+
+void irMessage(int messageNumber) {
+  if (messageNumber == 1){Serial.write('Power toggle, wait, start sleeping for 120 minutes');}
+  if (messageNumber == 2){Serial.write('VolumeUp');}
+  if (messageNumber == 3){Serial.write('VolumeDown');}
+  if (messageNumber == 4){Serial.write('PresetPrevious');}
+  if (messageNumber == 5){Serial.write('Xbox');}
+  if (messageNumber == 6){Serial.write('Radio');}
+  if (messageNumber == 7){Serial.write('AppleTV');}
+  if (messageNumber == 8){Serial.write('Computer');}
+  if (messageNumber == 9){Serial.write('NightMode');}
 }
 
 void loop() {

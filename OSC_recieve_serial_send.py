@@ -14,7 +14,7 @@ def yamahaHandler(address, typetag, value, source): #a function for the Yamaha r
     #source should be the IP address and port it came from
     message = str(value)[1] #convert the value to a string, but only x in [x]
     print value
-    ser = serial.Serial(5, 9600) #open COM6 at 9600 baud and 8N1
+    ser = serial.Serial(4, 9600) #open COM5 at 9600 baud and 8N1
     ser.write(message) #send the command that we received
     ser.write('/n') #new line character to make it go
     ser.close()
