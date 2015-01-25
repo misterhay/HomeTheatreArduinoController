@@ -1,4 +1,4 @@
-#N canvas 1229 11 408 147 10;
+#N canvas 989 106 660 760 10;
 #X declare -lib mrpeach;
 #X obj -88 362 import mrpeach;
 #X msg -89 463 disconnect;
@@ -44,6 +44,8 @@
 #X msg -90 395 connect 127.0.0.1 9000;
 #X text 35 27 Apple TV;
 #X text 37 75 Xbox/DVD;
+#X msg 166 414 send /pin/2 1;
+#X msg 201 348 connect 127.0.0.1 9001;
 #X connect 1 0 2 0;
 #X connect 3 0 2 0;
 #X connect 4 0 2 0;
@@ -67,3 +69,5 @@
 #X connect 27 0 15 0;
 #X connect 29 0 20 0;
 #X connect 31 0 2 0;
+#X connect 34 0 4 0;
+#X connect 35 0 2 0;
