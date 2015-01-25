@@ -21,7 +21,7 @@ def yamahaHandler(address, typetag, value, source): #a function for the Yamaha r
 
 server.addMsgHandler("/yamaha", yamahaHandler) #the OSC address
 
-print "When you're finished, use ctrl-c to quit"
+print "When you've finished, use ctrl-c to quit"
 threadingServer = threading.Thread(target = server.serve_forever)
 threadingServer.start() #start the server thread we just defined
 
